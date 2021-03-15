@@ -53,12 +53,15 @@ const MainNavigator = createStackNavigator(
     initialRouteName: 'Home',
     // headerMode: 'float',
     defaulfNavigationOptions: ({ navigation }) => ({
-      headerTitleStyle: {
-        fontWeight: 'bold',
-        textAlign: 'center',
-        alignSelf: 'center',
-        flex: 1,
-      }
+      headerTitleStyle: (
+        // fontWeight: 'bold',
+        // textAlign: 'center',
+        // alignSelf: 'center',
+        // flex: 1,
+        <View style={{alignItem:'center',justifyContent:'center'}}>
+          <Text>{navigation.state.routeNamee}</Text>
+        </View>
+        )
     })
   }
 ); 
