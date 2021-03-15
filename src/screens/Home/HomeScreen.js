@@ -5,7 +5,7 @@ import { recipes } from '../../data/dataArrays';
 import MenuImage from '../../components/MenuImage/MenuImage';
 import DrawerActions from 'react-navigation';
 import { getCategoryName } from '../../data/MockDataAPI';
-
+import ImagePreview from 'react-native-image-preview';
 export default class HomeScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     title: 'Home',
@@ -20,14 +20,20 @@ export default class HomeScreen extends React.Component {
 
   constructor(props) {
     super(props);
+    this.state={
+      visible:false,
+      image:''
+    }
   }
-
-  onPressRecipe = item => {
-    this.props.navigation.navigate('Recipe', { item });
+onPressRecipe =item =>{
+    this.setState({visible:true,image:item})
+  };
+  closeImage =() =>{
+    this.setState({visible:false})
   };
 
   renderRecipes = ({ item }) => (
-    <TouchableHighlight underlayColor='rgba(73,182,77,1,0.9)' onPress={() => this.onPressRecipe(item)}>
+    <TouchableHighlight  underlayColor='rgba(73,182,77,1,0.9)'  onPress={() => this.onPressRecipe(item.photo_url)}>
       <View style={styles.container}>
         <Image style={styles.photo} source={{ uri: item.photo_url }} />
         <Text style={styles.title}>{item.title}</Text>
@@ -39,6 +45,7 @@ export default class HomeScreen extends React.Component {
   render() {
     return (
       <View>
+        <ImagePreview visible={this.state.visible} source={{uri: this.state.image}} close={this.closeImage} />
         <FlatList
           vertical
           showsVerticalScrollIndicator={false}
