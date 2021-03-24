@@ -13,8 +13,8 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start'
   },
   btnIcon: {
-    height: 25,
-    width: 25
+    height: 28,
+    width: 28
   },
   btnText: {
     fontSize: 16,

@@ -7,9 +7,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     height: 215,
-    borderColor: '#cccccc',
-    borderWidth: 0.5,
+    borderColor: '#c2c2c2',
+    borderWidth: 1.5,
     borderRadius: 20,
+    
   },
   categoriesPhoto: {
     width: '100%',

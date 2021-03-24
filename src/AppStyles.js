@@ -6,8 +6,10 @@ const { width, height } = Dimensions.get('window');
 const SCREEN_WIDTH = width < height ? width : height;
 
 const recipeNumColums = 2;
+const SizeNumColums = 3;
 // item size
-const RECIPE_ITEM_HEIGHT = 150;
+const RECIPE_ITEM_HEIGHT = 170;
+const SIZE_ITEM_HEIGHT = 50;
 const RECIPE_ITEM_MARGIN = 20;
 
 // 2 photos per width
@@ -19,13 +21,28 @@ export const RecipeCard = StyleSheet.create({
     marginLeft: RECIPE_ITEM_MARGIN,
     marginTop: 20,
     width: (SCREEN_WIDTH - (recipeNumColums + 1) * RECIPE_ITEM_MARGIN) / recipeNumColums,
-    height: RECIPE_ITEM_HEIGHT + 75,
+    height: RECIPE_ITEM_HEIGHT + 30,
     borderColor: '#cccccc',
     borderWidth: 0.5,
     borderRadius: 15
   },
+  Sizescontainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    textAlign:'center',
+    marginLeft: RECIPE_ITEM_MARGIN,
+    marginTop: 20,
+    paddingTop: 10,
+    width: (SCREEN_WIDTH - (SizeNumColums + 1) * RECIPE_ITEM_MARGIN) / SizeNumColums,
+    height: SIZE_ITEM_HEIGHT,
+    borderColor: '#FF6347',
+    backgroundColor: '#FF6347',
+    borderWidth: 0.5,
+    borderRadius: 30
+  },
   photo: {
-    width: (SCREEN_WIDTH - (recipeNumColums + 1) * RECIPE_ITEM_MARGIN) / recipeNumColums,
+    width: (SCREEN_WIDTH - (.5 ) * RECIPE_ITEM_MARGIN) / recipeNumColums,
     height: RECIPE_ITEM_HEIGHT,
     borderRadius: 15,
     borderBottomLeftRadius: 0,
@@ -41,8 +58,8 @@ export const RecipeCard = StyleSheet.create({
     marginRight: 5,
     marginLeft: 5,
   },
-  category: {
-    marginTop: 5,
-    marginBottom: 5
-  }
+  // category: {
+  //   marginTop: 5,
+  //   marginBottom: 5
+  // }
 });

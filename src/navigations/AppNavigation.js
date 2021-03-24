@@ -6,7 +6,10 @@ import {createStackNavigator} from '@react-navigation/stack'
 import {NavigationContainer} from '@react-navigation/native'
 import {createDrawerNavigator} from '@react-navigation/drawer' */
 import HomeScreen from '../screens/Home/HomeScreen';
+import ItemsScreen from '../screens/Items/ItemsScreen';
 import CategoriesScreen from '../screens/Categories/CategoriesScreen';
+import Items from '../screens/Items/ItemsScreen';
+import Sub_CategoriesScreen from '../screens/Categories/Sub_CategoriesScreen';
 import RecipeScreen from '../screens/Recipe/RecipeScreen';
 import RecipesListScreen from '../screens/RecipesList/RecipesListScreen';
 import DrawerContainer from '../screens/DrawerContainer/DrawerContainer';
@@ -43,6 +46,8 @@ const MainNavigator = createStackNavigator(
   {
     Home: HomeScreen,
     Categories: CategoriesScreen,
+    Items: ItemsScreen,
+    Sub_Categories: Sub_CategoriesScreen,
     Recipe: RecipeScreen,
     RecipesList: RecipesListScreen,
     Ingredient: IngredientScreen,
@@ -53,28 +58,7 @@ const MainNavigator = createStackNavigator(
     initialRouteName: 'Home',
     // headerMode: 'float',
     defaulfNavigationOptions: ({ navigation }) => ({
-      headerTitle: () => (
-                <View
-                  style={{
-                    flexDirection: "row",
-                    flex: 1,
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <Text
-                    style={{
-                      fontSize: 18,
-                      marginRight: 30,
-                      marginTop: 5,
-                      color:'white',
-                      fontWeight: "bold",
-                    }}
-                  >
-                   {navigation.state.routeName}
-                  </Text>
-                </View>
-              ),
+
     })
   }
 ); 
