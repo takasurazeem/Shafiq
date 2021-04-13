@@ -21,6 +21,9 @@ export default class HomeScreen extends React.Component {
           navigation.openDrawer();
         }}
       />
+    ),
+    headerRight: (
+      <Text></Text>
     )
   });
 

@@ -18,7 +18,10 @@ export default class ItemScreen extends React.Component {
           navigation.openDrawer();
         }}
       />
-    )
+      ),
+      headerRight: (
+        <Text></Text>
+      )
   });
 
   constructor(props) {

@@ -10,15 +10,14 @@ import {
   AsyncStorage,
   StyleSheet
 } from 'react-native';
+import * as FileSystem from 'expo-file-system';
 import styles from './styles';
-import { categories } from '../../data/dataArrays';
-import { getNumberOfRecipes } from '../../data/MockDataAPI';
-import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import MenuImage from '../../components/MenuImage/MenuImage';
 import * as Animatable from "react-native-animatable";
-export default class CategoriesScreen extends React.Component {
+import { Surface } from 'react-native-paper';
+export default class CatelogueScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
-    title: navigation.state.params.name,
+    title: 'Catelogues',
     headerTitleStyle: { alignSelf: 'center' },
     headerLeft:null,
     headerLeft: (
@@ -43,35 +42,45 @@ export default class CategoriesScreen extends React.Component {
   componentDidMount = async () => {
     var url = await AsyncStorage.getItem('url')
     this.props.navigation.setParams({title:this.props.navigation.getParam('name')})
-    console.log(url)
+    console.log( url+'api/catalogues_list')
 
     axios({
-      method: 'post',
-      url: url+'api/sub_cat',
+      method: 'get',
+      url: url+'api/catalogues_list',
       // responseType: 'stream'
-      data: {
-        main_cat_id:this.props.navigation.getParam('id')
-      }
     })
     .then(async({ data: response }) => {
-      console.log(response.sub_cats)
-      await this.setState({data:response.sub_cats,url:url,visible:false})
+      console.log(response)
+      await this.setState({data:response.catalogues,url:url,visible:false})
     });
   }
-  onPressCategory = item => {
-    this.props.navigation.navigate('Sub_Categories',{id:item.id,name:item.name})
+  onPressCatelogue =async item => {
+    // return console.log(this.state.url+'storage/'+item)
+    
+      let uri = this.state.url+'storage/'+item
+      console.log('a',uri)
+      let fileUri = FileSystem.documentDirectory ;
+      await FileSystem.downloadAsync(uri, fileUri)
+      .then(({ uri }) => {
+         console.log(uri)
+        })
+        .catch(error => {
+          console.error(error);
+        })
   };
 
   renderCategory = ({ item }) => (
-    <Animatable.View style={styles.card} animation="slideInDown" iterationCount={1} direction="alternate">
-      <TouchableHighlight underlayColor='rgba(73,182,77,1,0.9)' onPress={() => this.onPressCategory(item)}>
-        <View style={styles.categoriesItemContainer}>
-            <Image style={styles.categoriesPhoto} source={{ uri: this.state.url+"storage/"+item.icon }} />
-            <Text style={styles.categoriesName}>{item.name}</Text>
-          {/* <Text style={styles.categoriesInfo}>{getNumberOfRecipes(item.id)} recipes</Text> */}
-        </View>
-      </TouchableHighlight>
-    </Animatable.View>
+    <Surface style={styles.surface}>
+      <Animatable.View style={{alignSelf:'center'}} animation="slideInDown" iterationCount={1} direction="alternate">
+        <TouchableHighlight underlayColor='rgba(73,182,77,1,0.9)' onPress={() => this.onPressCatelogue(item.file)}>
+          <View style={styles.cateloguesItemContainer}>
+              <Image resizeMode="cover" style={styles.cateloguesPhoto} source={{ uri: this.state.url+"storage/"+item.image }} />
+              <Text style={styles.cateloguesName}>{item.title}</Text>
+            {/* <Text style={styles.categoriesInfo}>{getNumberOfRecipes(item.id)} recipes</Text> */}
+          </View>
+        </TouchableHighlight>
+      </Animatable.View>
+    </Surface>
   );
 
   render() {
@@ -100,5 +109,13 @@ const styless = StyleSheet.create({
   lottie: {
     width: 100,
     height: 100
-  }
+  },
+  surface: {
+    padding: 8,
+    height: 80,
+    width: 80,
+    alignItems: 'center',
+    justifyContent: 'center',
+    elevation: 10,
+  },
 });

@@ -27,7 +27,10 @@ export default class SubCategoriesScreen extends React.Component {
           navigation.openDrawer();
         }}
       />
-    )
+      ),
+      headerRight: (
+        <Text></Text>
+      )
   });
   constructor(props) {
     super(props);

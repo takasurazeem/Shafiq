@@ -38,10 +38,10 @@ export default class DrawerContainer extends React.Component {
             }}
           />
           <MenuButton
-            title="Catalogues"
+            title="Catelogues"
             source={require('../../../assets/icons/catalogue.png')}
             onPress={() => {
-              // navigation.navigate('Categories');
+              navigation.navigate('Catelogues');
               navigation.closeDrawer();
             }}
           />
@@ -57,7 +57,7 @@ export default class DrawerContainer extends React.Component {
             title="Videos"
             source={require('../../../assets/icons/youtube.png')}
             onPress={() => {
-              // navigation.navigate('Categories');
+              navigation.navigate('Youtube');
               navigation.closeDrawer();
             }}
           />

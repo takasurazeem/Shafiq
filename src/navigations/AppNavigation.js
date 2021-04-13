@@ -8,6 +8,8 @@ import {createDrawerNavigator} from '@react-navigation/drawer' */
 import HomeScreen from '../screens/Home/HomeScreen';
 import ItemsScreen from '../screens/Items/ItemsScreen';
 import CategoriesScreen from '../screens/Categories/CategoriesScreen';
+import CatelogueScreen from '../screens/Catelogue/CatelogueScreen';
+import YoutubeScreen from '../screens/Youtube/YoutubeScreen';
 import Items from '../screens/Items/ItemsScreen';
 import Sub_CategoriesScreen from '../screens/Categories/Sub_CategoriesScreen';
 import RecipeScreen from '../screens/Recipe/RecipeScreen';
@@ -46,8 +48,10 @@ const MainNavigator = createStackNavigator(
   {
     Home: HomeScreen,
     Categories: CategoriesScreen,
+    Catelogues: CatelogueScreen,
     Items: ItemsScreen,
     Sub_Categories: Sub_CategoriesScreen,
+    Youtube: YoutubeScreen,
     Recipe: RecipeScreen,
     RecipesList: RecipesListScreen,
     Ingredient: IngredientScreen,
