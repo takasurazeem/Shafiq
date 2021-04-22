@@ -9,6 +9,7 @@ import HomeScreen from '../screens/Home/HomeScreen';
 import ItemsScreen from '../screens/Items/ItemsScreen';
 import CategoriesScreen from '../screens/Categories/CategoriesScreen';
 import CatelogueScreen from '../screens/Catelogue/CatelogueScreen';
+import PdfreaderScreen from '../screens/Catelogue/PdfreaderScreen';
 import YoutubeScreen from '../screens/Youtube/YoutubeScreen';
 import Items from '../screens/Items/ItemsScreen';
 import Sub_CategoriesScreen from '../screens/Categories/Sub_CategoriesScreen';
@@ -49,6 +50,7 @@ const MainNavigator = createStackNavigator(
     Home: HomeScreen,
     Categories: CategoriesScreen,
     Catelogues: CatelogueScreen,
+    Pdfreader: PdfreaderScreen,
     Items: ItemsScreen,
     Sub_Categories: Sub_CategoriesScreen,
     Youtube: YoutubeScreen,

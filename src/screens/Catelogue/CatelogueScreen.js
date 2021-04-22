@@ -8,7 +8,8 @@ import {
   Image,
   TouchableHighlight,
   AsyncStorage,
-  StyleSheet
+  StyleSheet,
+  Linking
 } from 'react-native';
 import * as FileSystem from 'expo-file-system';
 import styles from './styles';
@@ -72,7 +73,7 @@ export default class CatelogueScreen extends React.Component {
   renderCategory = ({ item }) => (
     <Surface style={styles.surface}>
       <Animatable.View style={{alignSelf:'center'}} animation="slideInDown" iterationCount={1} direction="alternate">
-        <TouchableHighlight underlayColor='rgba(73,182,77,1,0.9)' onPress={() => this.onPressCatelogue(item.file)}>
+        <TouchableHighlight underlayColor='rgba(73,182,77,1,0.9)' onPress={() => Linking.openURL('http://staging.shafiquesons.com/storage/'+item.file)}>
           <View style={styles.cateloguesItemContainer}>
               <Image resizeMode="cover" style={styles.cateloguesPhoto} source={{ uri: this.state.url+"storage/"+item.image }} />
               <Text style={styles.cateloguesName}>{item.title}</Text>
