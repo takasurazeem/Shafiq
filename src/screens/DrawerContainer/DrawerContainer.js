@@ -65,7 +65,7 @@ export default class DrawerContainer extends React.Component {
             title="About us"
             source={require('../../../assets/icons/aboutus.png')}
             onPress={() => {
-              // navigation.navigate('Categories');
+              navigation.navigate('AboutUs');
               navigation.closeDrawer();
             }}
           />

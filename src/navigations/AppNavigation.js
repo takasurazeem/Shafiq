@@ -11,14 +11,10 @@ import CategoriesScreen from '../screens/Categories/CategoriesScreen';
 import CatelogueScreen from '../screens/Catelogue/CatelogueScreen';
 import PdfreaderScreen from '../screens/Catelogue/PdfreaderScreen';
 import YoutubeScreen from '../screens/Youtube/YoutubeScreen';
-import Items from '../screens/Items/ItemsScreen';
 import Sub_CategoriesScreen from '../screens/Categories/Sub_CategoriesScreen';
-import RecipeScreen from '../screens/Recipe/RecipeScreen';
-import RecipesListScreen from '../screens/RecipesList/RecipesListScreen';
+import AboutUsScreen from '../screens/AboutUs/AboutUsScreen';
 import DrawerContainer from '../screens/DrawerContainer/DrawerContainer';
-import IngredientScreen from '../screens/Ingredient/IngredientScreen';
 import SearchScreen from '../screens/Search/SearchScreen';
-import IngredientsDetailsScreen from '../screens/IngredientsDetails/IngredientsDetailsScreen';
 
 /* const Stack = createStackNavigator();
 
@@ -54,11 +50,8 @@ const MainNavigator = createStackNavigator(
     Items: ItemsScreen,
     Sub_Categories: Sub_CategoriesScreen,
     Youtube: YoutubeScreen,
-    Recipe: RecipeScreen,
-    RecipesList: RecipesListScreen,
-    Ingredient: IngredientScreen,
+    AboutUs: AboutUsScreen,
     Search: SearchScreen,
-    IngredientsDetails: IngredientsDetailsScreen
   },
   {
     initialRouteName: 'Home',
