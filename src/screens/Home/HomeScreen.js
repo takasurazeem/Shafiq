@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList, ScrollView,AsyncStorage ,Text, View, TouchableOpacity, Image ,StyleSheet} from 'react-native';
+import { FlatList, ScrollView,AsyncStorage ,Text, View, TouchableOpacity, Image ,StyleSheet, ImageBackground} from 'react-native';
 import styles from './styles';
 import { recipes } from '../../data/dataArrays';
 import MenuImage from '../../components/MenuImage/MenuImage';
@@ -23,8 +23,11 @@ export default class HomeScreen extends React.Component {
       />
     ),
     headerRight: (
-      <Text></Text>
-    )
+      <Image
+      style={styless.headerButtonImage}
+      source={require('../../../assets/icons/home.png')}
+      />
+    ),
   });
 
   constructor(props) {
@@ -41,12 +44,12 @@ onPressRecipe =item =>{
     // await AsyncStorage.setItem({"url":"http://staging.shafiquesons.com/"})
     await AsyncStorage.setItem(
       'url',
-      'http://staging.shafiquesons.com/'
+      'https://shafiquesons.com/'
     );
     console.log('as')
     axios({
       method: 'get',
-      url: 'http://staging.shafiquesons.com/api/main_cat',
+      url: 'https://shafiquesons.com/api/main_cat',
       // responseType: 'stream'
     })
       .then(({ data: response }) => {
@@ -57,27 +60,28 @@ onPressRecipe =item =>{
   render() {
     const {visible} = this.state
     return (
-      this.state.data.length>2?
-        <ScrollView style={{backgroundColor:'white'}}>
+      <ImageBackground style={{ flex:1}} resizeMode= 'stretch' source={require('../../../assets/1.jpg')}>
+      {this.state.data.length>2?
+        <ScrollView style={{}}>
           {this.state.data.map((item,key) => (
               <View style={{flex:.5}}>
                 <Animatable.View style={styles.card} animation="slideInDown" iterationCount={1} direction="alternate">
                   <TouchableOpacity style={{justifyContent:'center',alignItems:'center',paddingVertical:50}} onPress={()=>this.props.navigation.navigate("Categories",{id:item.id,name:item.name})}>
-                    <Image style={styles.photo} source={{ uri: "http://staging.shafiquesons.com/storage"+item.icon }} />
-                    <Text style={{fontSize:hp('3%'),fontWeight:'bold'}}>{item.name}</Text>
+                    <Image style={styles.photo} source={{ uri: "https://shafiquesons.com/storage/"+item.icon }} />
+                    <Text style={{fontSize:hp('3%'),fontWeight:'bold',color:'black'}}>{item.name}</Text>
                   </TouchableOpacity>
                 </Animatable.View>
               </View>
           ))}
         </ScrollView>
       :
-        <View style={{backgroundColor:'white',flex:1}}>
+        <View style={{flex:1}}>
         {this.state.data.map((item,key) => (
             <View style={{flex:.5,alignItems:'center',justifyContent:'center'}}>
               <Animatable.View style={styles.card} animation="slideInDown" iterationCount={1} direction="alternate">
                 <TouchableOpacity style={{justifyContent:'center',alignItems:'center',paddingVertical:50}} onPress={()=>this.props.navigation.navigate("Categories",{id:item.id,name:item.name})}>
-                  <Image style={styles.photo} source={{ uri: "http://staging.shafiquesons.com/storage"+item.icon }} />
-                  <Text style={{fontSize:hp('3%'),fontWeight:'bold'}}>{item.name}</Text>
+                  <Image style={styles.photo} source={{ uri: "https://shafiquesons.com/storage/"+item.icon }} />
+                  <Text style={{fontSize:hp('3%'),fontWeight:'bold',color:'black'}}>{item.name}</Text>
                 </TouchableOpacity>
               </Animatable.View>
             </View>
@@ -92,6 +96,8 @@ onPressRecipe =item =>{
           <Text style={{fontSize:18}}>Loading...</Text>
         </AnimatedLoader>
       </View>
+  }
+      </ImageBackground>
     );
   }
 }
@@ -99,5 +105,11 @@ const styless = StyleSheet.create({
   lottie: {
     width: 100,
     height: 100
-  }
+  },
+  headerButtonImage: {
+    justifyContent: 'center',
+    width: 35,
+    height: 35,
+    margin: 6
+    }
 });

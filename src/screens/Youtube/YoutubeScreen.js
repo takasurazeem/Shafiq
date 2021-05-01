@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList, ScrollView,AsyncStorage,Linking ,Text, View, TouchableOpacity, Image ,StyleSheet} from 'react-native';
+import { FlatList, ImageBackground,AsyncStorage,Linking ,Text, View, TouchableHighlight, Image ,StyleSheet} from 'react-native';
 import styles from './styles';
 import { recipes } from '../../data/dataArrays';
 import MenuImage from '../../components/MenuImage/MenuImage';
@@ -8,8 +8,8 @@ import { getCategoryName } from '../../data/MockDataAPI';
 import Items from '../../components/Items/Items';
 import ImagePreview from 'react-native-image-preview';
 import AnimatedLoader from "react-native-animated-loader";
+import { Surface } from 'react-native-paper';
 import * as Animatable from "react-native-animatable";
-import { WebView } from 'react-native-webview';
 import axios from 'axios';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 export default class YoutubeScreen extends React.Component {
@@ -24,8 +24,11 @@ export default class YoutubeScreen extends React.Component {
       />
       ),
       headerRight: (
-        <Text></Text>
-      )
+        <Image
+        style={styless.headerButtonImage}
+        source={require('../../../assets/icons/youtube2.png')}
+        />
+      ),
   });
 
   constructor(props) {
@@ -54,20 +57,30 @@ onPressRecipe =item =>{
       });
   }
   renderCategory = ({ item }) => (
-    <Animatable.View style={styles.card} animation="slideInDown" iterationCount={1} direction="alternate">
-      <TouchableOpacity underlayColor='rgba(73,182,77,1,0.9)' onPress={() =>Linking.openURL(item.url)}>
+    <Animatable.View  animation="slideInDown" iterationCount={1} direction="alternate">
+      {/* <TouchableOpacity underlayColor='rgba(73,182,77,1,0.9)' onPress={() =>Linking.openURL(item.url)}>
         <View style={styles.categoriesItemContainer}>
             <Image style={styles.categoriesPhoto} source={{ uri: this.state.url+"storage/"+item.image }} />
             <Text style={styles.categoriesName}>{item.title}</Text>
-          {/* <Text style={styles.categoriesInfo}>{getNumberOfRecipes(item.id)} recipes</Text> */}
         </View>
       </TouchableOpacity>
+    </Animatable.View> */}
+    <TouchableHighlight underlayColor='rgba(73,182,77,1,0.9)' onPress={() =>Linking.openURL(item.url)}>
+        <View style={styles.card}>
+            <Image style={styles.cardImage} source={{uri: this.state.url+"storage/"+item.image}}/>
+            <View style={styles.cardHeader}>
+                <View style={styles.timeContainer}>
+                  <Text style={styles.title}>{item.title}</Text>
+                </View>
+              </View>
+        </View>
+      </TouchableHighlight>
     </Animatable.View>
   );
   render() {
     const {visible} = this.state
     return (
-      <View style={{flex:1}}>
+      <ImageBackground style={{ flex:1}} resizeMode= 'stretch' source={require('../../../assets/1.jpg')}>
       <FlatList
         data={this.state.data}
         renderItem={this.renderCategory}
@@ -82,7 +95,7 @@ onPressRecipe =item =>{
     >
       <Text style={{fontSize:18}}>Loading...</Text>
     </AnimatedLoader>
-  </View>
+  </ImageBackground>
     );
   }
 }
@@ -90,5 +103,19 @@ const styless = StyleSheet.create({
   lottie: {
     width: 100,
     height: 100
-  }
+  },
+  surface: {
+    padding: 8,
+    height: 80,
+    width: 80,
+    alignItems: 'center',
+    justifyContent: 'center',
+    elevation: 10,
+  },
+  headerButtonImage: {
+    justifyContent: 'center',
+    width: 35,
+    height: 35,
+    margin: 6
+    }
 });

@@ -4,123 +4,195 @@ import {
   Text,
   View,
   Image,
-  TouchableHighlight
+  TouchableHighlight,
+  StyleSheet,
+  AsyncStorage,
+  TextInput,
+  ImageBackground,
+  Keyboard
 } from 'react-native';
+import axios from 'axios';
 import styles from './styles';
-import { ListItem, SearchBar } from 'react-native-elements';
+import ImagePreview from 'react-native-image-preview';
 import MenuImage from '../../components/MenuImage/MenuImage';
-import {
-  getCategoryName,
-  getRecipesByRecipeName,
-  getRecipesByCategoryName,
-  getRecipesByIngredientName
-} from '../../data/MockDataAPI';
-
+import DropDownPicker from 'react-native-dropdown-picker';
+import Icon from 'react-native-vector-icons/Feather';
+import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
+import AnimatedLoader from "react-native-animated-loader";
+import * as Animatable from "react-native-animatable";
+import { SafeAreaView } from 'react-native-safe-area-context';
 export default class SearchScreen extends React.Component {
-  static navigationOptions = ({ navigation }) => {
-    const { params = {} } = navigation.state;
-    return {
+  static navigationOptions = ({ navigation }) => ({
+    title: 'Search',
+    headerTitleStyle: { alignSelf: 'center' },
+    headerLeft: (
+      <MenuImage
+        onPress={() => {
+          navigation.openDrawer();
+        }}
+      />
+      ),
       headerRight: (
-        <MenuImage
-          onPress={() => {
-            navigation.openDrawer();
-          }}
+        <Image
+        style={style.headerButtonImage}
+        source={require('../../../assets/icons/search.png')}
         />
       ),
-      headerTitle: (
-        <SearchBar
-          containerStyle={{
-            backgroundColor: 'transparent',
-            borderBottomColor: 'transparent',
-            borderTopColor: 'transparent',
-            flex: 1
-          }}
-          inputContainerStyle={{
-            backgroundColor: '#EDEDED'
-          }}
-          inputStyle={{
-            backgroundColor: '#EDEDED',
-            borderRadius: 10,
-            color: 'black'
-          }}
-          searchIcond
-          clearIcon
-          //lightTheme
-          round
-          onChangeText={text => params.handleSearch(text)}
-          //onClear={() => params.handleSearch('')}
-          placeholder="Search"
-          value={params.data}
-        />
-      )
-    };
-  };
+  });
 
   constructor(props) {
     super(props);
     this.state = {
-      value: '',
-      data: []
+      visible: false,
+      Productsloading: false,
+      data: [],
+      items: [],
+      size:'',
+      code:''
     };
   }
-
-  componentDidMount() {
-    const { navigation } = this.props;
-    navigation.setParams({
-      handleSearch: this.handleSearch,
-      data: this.getValue
+  componentDidMount =async () => {
+    var url = await AsyncStorage.getItem('url')
+    console.log(url+'api/sizes_list')
+    axios({
+      method: 'get',
+      url: url+'api/sizes_list',
+    })
+    .then(async({ data: response }) => {
+      console.log(response.sizes)
+      var sizes=[]
+      response.sizes.map(x =>{
+          sizes.push({label: x.size, value: x.id, icon: () => <Icon name="flag" size={18} color="#900" />})
+      })
+      await this.setState({data:sizes,url:url,Productsloading:false})
     });
   }
-
-  handleSearch = text => {
-    var recipeArray1 = getRecipesByRecipeName(text);
-    var recipeArray2 = getRecipesByCategoryName(text);
-    var recipeArray3 = getRecipesByIngredientName(text);
-    var aux = recipeArray1.concat(recipeArray2);
-    var recipeArray = [...new Set(aux)];
-    if (text == '') {
-      this.setState({
-        value: text,
-        data: []
-      });
-    } else {
-      this.setState({
-        value: text,
-        data: recipeArray
-      });
+  search =async () => {
+    if(this.state.size =="" && this.state.code ==""){
+       return alert('Select Size or Enter Code!')
     }
+    await this.setState({Productsloading:true})
+    axios({
+      method: 'post',
+      url: this.state.url+'api/search_products',
+      data: {
+        size_id:this.state.size,
+        code:this.state.code,
+      }
+    })
+    .then(async({ data: response }) => {
+      console.log(response)
+      if(response.data.length==0){
+        alert('No Data Found!')
+      }
+        await this.setState({items:response.data,Productsloading:false,Error:''})
+    });
+  }
+  onPressProduct =item =>{
+    this.setState({visible:true,image:item})
   };
-
-  getValue = () => {
-    return this.state.value;
+  closeImage =() =>{
+    this.setState({visible:false})
   };
-
-  onPressRecipe = item => {
-    this.props.navigation.navigate('Recipe', { item });
-  };
-
-  renderRecipes = ({ item }) => (
-    <TouchableHighlight underlayColor='rgba(73,182,77,1,0.9)' onPress={() => this.onPressRecipe(item)}>
-      <View style={styles.container}>
-        <Image style={styles.photo} source={{ uri: item.photo_url }} />
-        <Text style={styles.title}>{item.title}</Text>
-        <Text style={styles.category}>{getCategoryName(item.categoryId)}</Text>
-      </View>
-    </TouchableHighlight>
+  renderProducts = ({ item }) => (
+    <Animatable.View style={styles.card} animation="slideInDown" iterationCount={1} direction="alternate">
+      <TouchableHighlight  underlayColor='rgba(73,182,77,1,0.9)'  onPress={() => this.onPressProduct(this.state.url+"storage/"+item.image)}>
+          {/* <View style={styles.container}>
+            <Image style={styles.photo} source={{ uri: this.state.url+"storage/"+item.image }} />
+            <Text style={styles.title}>{item.code}</Text>
+          </View> */}
+          <View style={{  }}>
+                <View style={styles.imageContainer}>
+                  <Image style={styles.cardImage} source={{uri:this.state.url+"storage/"+item.image}}/>
+                </View>
+                <View style={styles.cardContent}>
+                  <Text style={styles.title}>{item.code}</Text>
+                </View>
+              </View>
+      </TouchableHighlight>
+    </Animatable.View>
   );
 
   render() {
     return (
-      <View>
-        <FlatList
-          vertical
-          showsVerticalScrollIndicator={false}
-          numColumns={2}
-          data={this.state.data}
-          renderItem={this.renderRecipes}
-          keyExtractor={item => `${item.recipeId}`}
-        />
-      </View>
+      <ImageBackground style={{ flex:1}} resizeMode= 'stretch' source={require('../../../assets/1.jpg')}>
+        <SafeAreaView style={{ flex:1 }} onPress={Keyboard.dismiss()}>
+          <View style={{  flexDirection:'row',justifyContent:'center',marginTop:5 }}>
+            <Text style={{ fontSize:20,paddingBottom:5,borderBottomWidth:1,borderBottomColor:'#FF6347' }}>Search Items</Text>
+          </View>
+          <View style={{ paddingHorizontal:20,paddingTop:20,alignItems:'center'}}>
+          <View style={{width:'70%',marginVertical:10,zIndex:0 }}>
+              <Text>Search by Code</Text>
+              <TextInput
+                style={{ height: 40,borderWidth: .1,backgroundColor:'#fafafa',borderColor:'#adadad',shadowColor: '#000',
+                shadowOffset: { width: 0, height: 1 },
+                shadowOpacity: 0.8,
+                shadowRadius: 2,  
+                elevation: 1,paddingLeft:5 }}
+                onChangeText={code =>{this.setState({code:code})}}
+                // value={number}
+                placeholder="Code###"
+                // keyboardType="numeric"
+              />
+            </View>
+            <View style={{width:'70%',marginVertical:10}}>
+              <Text>Select Size</Text>
+              <DropDownPicker
+                  items={this.state.data}
+                  defaultValue={this.state.country}
+                  containerStyle={{height: 40}}
+                  style={{backgroundColor: '#fafafa'}}
+                  itemStyle={{
+                      justifyContent: 'flex-start'
+                  }}
+                  dropDownStyle={{backgroundColor: '#fafafa'}}
+                  onChangeItem={size => this.setState({size:size})}
+              />
+            </View>
+            
+          </View>
+          <View style={{ flexDirection:'row',justifyContent:'center' }}>
+            <TouchableOpacity style={{ backgroundColor:'#FF6347',padding:15,borderRadius:10 }} onPress={this.search}>
+              <Text style={{ color:'white' }}>Search</Text>
+            </TouchableOpacity>
+          </View>
+          
+          <ImagePreview visible={this.state.visible} source={{uri: this.state.image}} close={this.closeImage} />
+              {this.state.items.length>0 &&
+                <View style={{justifyContent:'center',alignItems:'center',paddingVertical:10}}>
+                  <View style={{borderBottomWidth:1,borderColor:'#FF6347',paddingBottom:10}}>
+                    <Text style={{fontSize:20}}>Products</Text>
+                  </View>
+                </View>
+              }
+              <FlatList
+                vertical
+                showsVerticalScrollIndicator={false}
+                numColumns={2}
+                data={this.state.items}
+                renderItem={this.renderProducts}
+                keyExtractor={item => `${item.size_id}`}
+              />
+              <AnimatedLoader
+                visible={this.state.Productsloading}
+                overlayColor="rgba(255,255,255,0.75)"
+                // source={require("./loader.json")}
+                animationStyle={styles.lottie}
+                speed={2}
+              >
+                <Text style={{fontSize:18}}>Loading...</Text>
+              </AnimatedLoader>
+          
+        </SafeAreaView>
+      </ImageBackground>
     );
   }
 }
+const style=StyleSheet.create({
+  headerButtonImage: {
+  justifyContent: 'center',
+  width: 35,
+  height: 35,
+  margin: 6
+  }
+  });

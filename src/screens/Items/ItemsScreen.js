@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList, ScrollView, Text, View, TouchableHighlight, Image,AsyncStorage,StyleSheet } from 'react-native';
+import { FlatList, ImageBackground, Text, View, TouchableHighlight, Image,AsyncStorage,StyleSheet } from 'react-native';
 import styles from './styles';
 import Items from '../../components/Items/Items';
 import ImagePreview from 'react-native-image-preview';
@@ -20,8 +20,11 @@ export default class ItemScreen extends React.Component {
       />
       ),
       headerRight: (
-        <Text></Text>
-      )
+        <Image
+        style={styless.headerButtonImage}
+        source={require('../../../assets/icons/product.png')}
+        />
+      ),
   });
 
   constructor(props) {
@@ -102,15 +105,23 @@ export default class ItemScreen extends React.Component {
   renderProducts = ({ item }) => (
     <Animatable.View style={styles.card} animation="slideInDown" iterationCount={1} direction="alternate">
       <TouchableHighlight  underlayColor='rgba(73,182,77,1,0.9)'  onPress={() => this.onPressProduct(this.state.url+"storage/"+item.image)}>
-          <View style={styles.container}>
+          {/* <View style={styles.container}>
             <Image style={styles.photo} source={{ uri: this.state.url+"storage/"+item.image }} />
             <Text style={styles.title}>{item.code}</Text>
-          </View>
+          </View> */}
+          <View style={{  }}>
+                <View style={styles.imageContainer}>
+                  <Image style={styles.cardImage} source={{uri:this.state.url+"storage/"+item.image}}/>
+                </View>
+                <View style={styles.cardContent}>
+                  <Text style={styles.title}>{item.code}</Text>
+                </View>
+              </View>
       </TouchableHighlight>
     </Animatable.View>
   );
   renderSizes = ({ item }) => (
-    <Animatable.View style={styles.card} animation="slideInDown" iterationCount={1} direction="alternate">
+    <Animatable.View  animation="slideInDown" iterationCount={1} direction="alternate">
       <TouchableOpacity  underlayColor='rgba(73,182,77,1,0.9)' onPress={() =>this.getProducts(item.id)} >
           <View style={styles.Sizescontainer}>
             <Text style={[styles.title,{color:'white'}]}>{item.size}</Text>
@@ -121,7 +132,7 @@ export default class ItemScreen extends React.Component {
   render() {
     const {loading} = this.state
     return (
-      <View>
+      <ImageBackground style={{ flex:1}} resizeMode= 'stretch' source={require('../../../assets/1.jpg')}>
         {this.state.MetaData.length>0?
         <View>
           <View style={{justifyContent:'center',alignItems:'center',paddingVertical:10}}>
@@ -165,7 +176,7 @@ export default class ItemScreen extends React.Component {
             >
               <Text style={{fontSize:18}}>Loading...</Text>
             </AnimatedLoader>
-      </View>
+      </ImageBackground>
     );
   }
 }
@@ -173,5 +184,11 @@ const styless = StyleSheet.create({
   lottie: {
     width: 100,
     height: 100
-  }
+  },
+  headerButtonImage: {
+    justifyContent: 'center',
+    width: 35,
+    height: 35,
+    margin: 6
+    }
 });

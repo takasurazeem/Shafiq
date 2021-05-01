@@ -9,9 +9,9 @@ import {
   TouchableHighlight,
   AsyncStorage,
   StyleSheet,
-  Linking
+  Linking,
+  ImageBackground
 } from 'react-native';
-import * as FileSystem from 'expo-file-system';
 import styles from './styles';
 import MenuImage from '../../components/MenuImage/MenuImage';
 import * as Animatable from "react-native-animatable";
@@ -29,15 +29,18 @@ export default class CatelogueScreen extends React.Component {
       />
       ),
       headerRight: (
-        <Text></Text>
-      )
+        <Image
+        style={styless.headerButtonImage}
+        source={require('../../../assets/icons/catalogue.png')}
+        />
+      ),
   });
   constructor(props) {
     super(props);
     this.state = {
       data:[],
       url:'',
-      visible: true
+      visible: false
     }
   }
   componentDidMount = async () => {
@@ -71,23 +74,35 @@ export default class CatelogueScreen extends React.Component {
   };
 
   renderCategory = ({ item }) => (
-    <Surface style={styles.surface}>
-      <Animatable.View style={{alignSelf:'center'}} animation="slideInDown" iterationCount={1} direction="alternate">
-        <TouchableHighlight underlayColor='rgba(73,182,77,1,0.9)' onPress={() => Linking.openURL('http://staging.shafiquesons.com/storage/'+item.file)}>
-          <View style={styles.cateloguesItemContainer}>
-              <Image resizeMode="cover" style={styles.cateloguesPhoto} source={{ uri: this.state.url+"storage/"+item.image }} />
-              <Text style={styles.cateloguesName}>{item.title}</Text>
-            {/* <Text style={styles.categoriesInfo}>{getNumberOfRecipes(item.id)} recipes</Text> */}
-          </View>
-        </TouchableHighlight>
-      </Animatable.View>
-    </Surface>
+    // <Surface style={styles.surface}>
+    //   <Animatable.View style={{alignSelf:'center'}} animation="slideInDown" iterationCount={1} direction="alternate">
+    //     <TouchableHighlight underlayColor='rgba(73,182,77,1,0.9)' onPress={() => Linking.openURL('http://staging.shafiquesons.com/storage/'+item.file)}>
+    //       <View style={styles.cateloguesItemContainer}>
+    //           <Image resizeMode="cover" style={styles.cateloguesPhoto} source={{ uri: this.state.url+"storage/"+item.image }} />
+    //           <Text style={styles.cateloguesName}>{item.title}</Text>
+    //         {/* <Text style={styles.categoriesInfo}>{getNumberOfRecipes(item.id)} recipes</Text> */}
+    //       </View>
+    //     </TouchableHighlight>
+    //   </Animatable.View>
+    // </Surface>
+    <Animatable.View  animation="slideInDown" iterationCount={1} direction="alternate">
+      <TouchableHighlight underlayColor='rgba(73,182,77,1,0.9)' onPress={() => Linking.openURL(this.state.url+'storage/'+item.file)}>
+        <View style={styles.card}>
+            <Image style={styles.cardImage} source={{ uri: this.state.url+"storage/"+item.image }}/>
+            <View style={styles.cardHeader}>
+                <View style={styles.timeContainer}>
+                  <Text style={styles.title}>{item.title}</Text>
+                </View>
+              </View>
+        </View>
+      </TouchableHighlight>
+    </Animatable.View>
   );
 
   render() {
     const {visible} = this.state
     return (
-      <View style={{flex:1}}>
+      <ImageBackground style={{ flex:1}} resizeMode= 'stretch' source={require('../../../assets/1.jpg')}>
           <FlatList
             data={this.state.data}
             renderItem={this.renderCategory}
@@ -102,7 +117,7 @@ export default class CatelogueScreen extends React.Component {
         >
           <Text style={{fontSize:18}}>Loading...</Text>
         </AnimatedLoader>
-      </View>
+      </ImageBackground>
     );
   }
 }
@@ -119,4 +134,10 @@ const styless = StyleSheet.create({
     justifyContent: 'center',
     elevation: 10,
   },
+  headerButtonImage: {
+    justifyContent: 'center',
+    width: 35,
+    height: 35,
+    margin: 6
+  }
 });

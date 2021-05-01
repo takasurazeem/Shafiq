@@ -9,8 +9,8 @@ export default class DrawerContainer extends React.Component {
     const { navigation } = this.props;
     return (
       <View style={styles.content}>
-        <View style={{alignItem:'center',justifyContent:'center',flex:.3}}>
-          <Image style={{width:150,height:150}} source={require('../../../assets/icons/icon.png')} />
+        <View style={{alignItem:'center',width:250,justifyContent:'center',flex:.25,borderBottomColor:'#c7c8c9',borderBottomWidth:1,marginBottom:20}}>
+          <Image style={{width:150,height:150,alignSelf:'center'}} source={require('../../../assets/icons/icon.png')} />
         </View>
         <View style={styles.container}>
           <MenuButton
@@ -25,7 +25,7 @@ export default class DrawerContainer extends React.Component {
             title="Search"
             source={require('../../../assets/icons/search.png')}
             onPress={() => {
-              // navigation.navigate('Search');
+              navigation.navigate('Search');
               navigation.closeDrawer();
             }}
           />
@@ -33,7 +33,7 @@ export default class DrawerContainer extends React.Component {
             title="Calculator"
             source={require('../../../assets/icons/calculator.png')}
             onPress={() => {
-              // navigation.navigate('Categories');
+              navigation.navigate('Calculator');
               navigation.closeDrawer();
             }}
           />
@@ -49,7 +49,7 @@ export default class DrawerContainer extends React.Component {
             title="Latest News"
             source={require('../../../assets/icons/news.png')}
             onPress={() => {
-              // navigation.navigate('Categories');
+              navigation.navigate('LatestNews');
               navigation.closeDrawer();
             }}
           />
@@ -73,7 +73,7 @@ export default class DrawerContainer extends React.Component {
             title="Contact Us"
             source={require('../../../assets/icons/contact.png')}
             onPress={() => {
-              // navigation.navigate('Categories');
+              navigation.navigate('ContactUs');
               navigation.closeDrawer();
             }}
           />

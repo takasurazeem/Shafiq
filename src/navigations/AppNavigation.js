@@ -9,12 +9,14 @@ import HomeScreen from '../screens/Home/HomeScreen';
 import ItemsScreen from '../screens/Items/ItemsScreen';
 import CategoriesScreen from '../screens/Categories/CategoriesScreen';
 import CatelogueScreen from '../screens/Catelogue/CatelogueScreen';
-import PdfreaderScreen from '../screens/Catelogue/PdfreaderScreen';
 import YoutubeScreen from '../screens/Youtube/YoutubeScreen';
 import Sub_CategoriesScreen from '../screens/Categories/Sub_CategoriesScreen';
 import AboutUsScreen from '../screens/AboutUs/AboutUsScreen';
 import DrawerContainer from '../screens/DrawerContainer/DrawerContainer';
 import SearchScreen from '../screens/Search/SearchScreen';
+import ContactUsScreen from '../screens/ContactUs/ContactUsScreen';
+import CalculatorScreen from '../screens/Calculator/CalculatorScreen';
+import LatestNewsScreen from '../screens/LatestNews/LatestNewsScreen';
 
 /* const Stack = createStackNavigator();
 
@@ -46,12 +48,14 @@ const MainNavigator = createStackNavigator(
     Home: HomeScreen,
     Categories: CategoriesScreen,
     Catelogues: CatelogueScreen,
-    Pdfreader: PdfreaderScreen,
     Items: ItemsScreen,
     Sub_Categories: Sub_CategoriesScreen,
+    LatestNews: LatestNewsScreen,
     Youtube: YoutubeScreen,
     AboutUs: AboutUsScreen,
     Search: SearchScreen,
+    ContactUs: ContactUsScreen,
+    Calculator: CalculatorScreen,
   },
   {
     initialRouteName: 'Home',

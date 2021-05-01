@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
     marginRight:5
   },
   timeContainer:{
-    flexDirection:'row'
+    flexDirection:'row',
   },
   /******** social bar ******************/
   socialBarContainer: {

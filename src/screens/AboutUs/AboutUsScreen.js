@@ -5,7 +5,9 @@ import {
   Text,
   View,
   ScrollView,
-  StyleSheet
+  StyleSheet,
+  Image,
+  ImageBackground
 } from 'react-native';
 import MenuImage from '../../components/MenuImage/MenuImage';
 export default class CategoriesScreen extends React.Component {
@@ -21,8 +23,11 @@ export default class CategoriesScreen extends React.Component {
       />
       ),
       headerRight: (
-        <Text></Text>
-      )
+        <Image
+        style={styless.headerButtonImage}
+        source={require('../../../assets/icons/aboutus.png')}
+        />
+      ),
   });
   constructor(props) {
     super(props);
@@ -35,7 +40,8 @@ export default class CategoriesScreen extends React.Component {
   render() {
     const {visible} = this.state
     return (
-      <ScrollView style={{ paddingHorizontal:15,paddingVertical:20,backgroundColor:'white' }}>
+      <ImageBackground style={{ flex:1}} resizeMode= 'stretch' source={require('../../../assets/1.jpg')}>
+      <ScrollView style={{ paddingHorizontal:15,paddingVertical:20 }}>
           <View style={{ marginBottom:30 }}>
               <Text>
                   With A Heritage Of Rich Business Traditions Such As Honesty And Integrity Inherited From The Visionary <Text style={{ fontWeight:'bold',fontSize:16 }}>Haji Muhammad Shafiq</Text> Late, The Next Generation Laid The Foundations Of <Text style={{ fontWeight:'bold',fontSize:16 }}>SHAFIQUE SONS</Text> In 2009. With A Futuristic Approach Towards Provision Of Ultimate Quality Products Coupled With The Old Fashioned Ways Of Fair Business Practices Turned Out To The Basis Of Immense Success Of This Newly Established Entity.
@@ -67,6 +73,7 @@ export default class CategoriesScreen extends React.Component {
               </Text>
           </View>
       </ScrollView>
+      </ImageBackground>
     );
   }
 }
@@ -74,5 +81,11 @@ const styless = StyleSheet.create({
   lottie: {
     width: 100,
     height: 100
+  },
+  headerButtonImage: {
+    justifyContent: 'center',
+    width: 35,
+    height: 35,
+    margin: 6
   }
 });

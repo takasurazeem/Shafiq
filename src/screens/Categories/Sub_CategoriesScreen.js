@@ -8,8 +8,8 @@ import {
   Image,
   TouchableHighlight,
   AsyncStorage,
-  StyleSheet
-  
+  StyleSheet,
+  ImageBackground
 } from 'react-native';
 import styles from './styles';
 import { categories } from '../../data/dataArrays';
@@ -29,8 +29,11 @@ export default class SubCategoriesScreen extends React.Component {
       />
       ),
       headerRight: (
-        <Text></Text>
-      )
+        <Image
+        style={styless.headerButtonImage}
+        source={require('../../../assets/icons/home.png')}
+        />
+      ),
   });
   constructor(props) {
     super(props);
@@ -63,21 +66,31 @@ export default class SubCategoriesScreen extends React.Component {
   };
 
   renderCategory = ({ item }) => (
-    <Animatable.View style={styles.card} animation="slideInDown" iterationCount={1} direction="alternate">
-      <TouchableHighlight underlayColor='rgba(73,182,77,1,0.9)' onPress={() => this.onPressCategory(item)}>
+    <Animatable.View  animation="slideInDown" iterationCount={1} direction="alternate">
+      {/* <TouchableHighlight underlayColor='rgba(73,182,77,1,0.9)' onPress={() => this.onPressCategory(item)}>
         <View style={styles.categoriesItemContainer}>
           <Image style={styles.categoriesPhoto} source={{ uri: this.state.url+"storage/"+item.icon }} />
           <Text style={styles.categoriesName}>{item.name}</Text>
           {/* <Text style={styles.categoriesInfo}>{getNumberOfRecipes(item.id)} recipes</Text> */}
-        </View>
-      </TouchableHighlight>
+        {/* </View> */}
+      {/* </TouchableHighlight> */} 
+      <TouchableHighlight underlayColor='rgba(73,182,77,1,0.9)' onPress={() => this.onPressCategory(item)}>
+      <View style={styles.card}>
+          <Image style={styles.cardImage} source={{uri: this.state.url+"storage/"+item.icon}}/>
+          <View style={styles.cardHeader}>
+              <View style={styles.timeContainer}>
+                <Text style={styles.title}>{item.name}</Text>
+              </View>
+            </View>
+      </View>
+    </TouchableHighlight>
     </Animatable.View>
   );
 
   render() {
     const {visible} = this.state
     return (
-      <View style={{flex:1}}>
+      <ImageBackground style={{ flex:1}} resizeMode= 'stretch' source={require('../../../assets/1.jpg')}>
           <FlatList
             data={this.state.data}
             renderItem={this.renderCategory}
@@ -92,7 +105,7 @@ export default class SubCategoriesScreen extends React.Component {
           >
             <Text style={{fontSize:18}}>Loading...</Text>
           </AnimatedLoader>
-      </View>
+      </ImageBackground>
     );
   }
 }
@@ -100,5 +113,11 @@ const styless = StyleSheet.create({
   lottie: {
     width: 100,
     height: 100
+  },
+  headerButtonImage: {
+    justifyContent: 'center',
+    width: 35,
+    height: 35,
+    margin: 6
   }
 });

@@ -7,9 +7,9 @@ import {
   View,
   Image,
   TouchableHighlight,
-  AsyncStorage,
+  ImageBackground,
   StyleSheet,
-  ImageBackground
+  AsyncStorage
 } from 'react-native';
 import styles from './styles';
 import { categories } from '../../data/dataArrays';
@@ -17,9 +17,10 @@ import { getNumberOfRecipes } from '../../data/MockDataAPI';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import MenuImage from '../../components/MenuImage/MenuImage';
 import * as Animatable from "react-native-animatable";
+import ViewMoreText from 'react-native-view-more-text';
 export default class CategoriesScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
-    title: navigation.state.params.name,
+    title: 'Latest News',
     headerTitleStyle: { alignSelf: 'center' },
     headerLeft:null,
     headerLeft: (
@@ -32,7 +33,7 @@ export default class CategoriesScreen extends React.Component {
       headerRight: (
         <Image
         style={styless.headerButtonImage}
-        source={require('../../../assets/icons/home.png')}
+        source={require('../../../assets/icons/news.png')}
         />
       ),
   });
@@ -46,52 +47,80 @@ export default class CategoriesScreen extends React.Component {
   }
   componentDidMount = async () => {
     var url = await AsyncStorage.getItem('url')
-    this.props.navigation.setParams({title:this.props.navigation.getParam('name')})
     console.log(url)
 
     axios({
-      method: 'post',
-      url: url+'api/sub_cat',
+      method: 'get',
+      url: url+'api/latest_news',
       // responseType: 'stream'
-      data: {
-        main_cat_id:this.props.navigation.getParam('id')
-      }
     })
     .then(async({ data: response }) => {
-      console.log(response.sub_cats)
-      await this.setState({data:response.sub_cats,url:url,visible:false})
+      console.log(response.latest_news)
+      await this.setState({data:response.latest_news,url:url,visible:false})
     });
   }
-  onPressCategory = item => {
-    this.props.navigation.navigate('Sub_Categories',{id:item.id,name:item.name})
-  };
-
-  renderCategory = ({ item }) => (
+  renderViewMore(onPress){
+    return(
+      <Text onPress={onPress} style={{ color:'#5a97fa' }}>View more</Text>
+    )
+  }
+  renderViewLess(onPress){
+    return(
+      <Text onPress={onPress} style={{ color:'#5a97fa' }}>View less</Text>
+    )
+  }
+  renderCategory = ({ item }) => {
+      let  months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+      let date = new Date(item.date)
+      let Month = months[date.getMonth()];
+      let Day = date.getDate();
+      return(
     <Animatable.View  animation="slideInDown" iterationCount={1} direction="alternate">
        {/* <TouchableHighlight underlayColor='rgba(73,182,77,1,0.9)' onPress={() => this.onPressCategory(item)}>
          <View style={styles.categoriesItemContainer}>
              <Image style={styles.categoriesPhoto} source={{ uri: this.state.url+"storage/"+item.icon }} />
              <Text style={styles.categoriesName}>{item.name}</Text>
          </View>
-       </TouchableHighlight> */}
+       </TouchableHighlight> */} 
      
-      <TouchableHighlight underlayColor='rgba(73,182,77,1,0.9)' onPress={() => this.onPressCategory(item)}>
+      <View underlayColor='rgba(73,182,77,1,0.9)'>
         <View style={styles.card}>
-            <Image style={styles.cardImage} source={{uri: this.state.url+"storage/"+item.icon}}/>
+            <ImageBackground style={styles.cardImage} source={{uri: this.state.url+"storage/"+item.image}}>
+                <View style={{ backgroundColor:'#D19A20',width:70,height:70 }}>
+                    <View style={{ backgroundColor:'#FF6347',padding:10,alignItems:'center',margin:5 }}>
+                        <Text style={{ color:'white' }}>{Day}</Text>
+                    </View>
+                    <View style={{ alignItems:'center' }}>
+                        <Text style={{ color:'white' }}>{Month}</Text>
+                    </View>
+                </View>
+            </ImageBackground>
             <View style={styles.cardHeader}>
                 <View style={styles.timeContainer}>
-                  <Text style={styles.title}>{item.name}</Text>
+                    <Text style={{fontSize:18}}>{item.title}</Text>
                 </View>
-              </View>
+                <View style={{ marginTop:20 }}>
+                    <ViewMoreText
+                    numberOfLines={2}
+                    renderViewMore={this.renderViewMore}
+                    renderViewLess={this.renderViewLess}
+                    // textStyle={{textAlign: 'center'}}
+                    >
+                    <Text>
+                        {item.description}
+                    </Text>
+                    </ViewMoreText>
+                </View>
+            </View>
         </View>
-      </TouchableHighlight>
+      </View>
     </Animatable.View>
-  );
+    )
+  };
 
   render() {
     const {visible} = this.state
     return (
-
       <ImageBackground style={{ flex:1}} resizeMode= 'stretch' source={require('../../../assets/1.jpg')}>
           <FlatList
             data={this.state.data}
@@ -121,5 +150,5 @@ const styless = StyleSheet.create({
     width: 35,
     height: 35,
     margin: 6
-  }
+    }
 });
