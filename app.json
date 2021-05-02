@@ -4,13 +4,12 @@
     "slug": "shafiq-and-sons",
     "description": "React Native Recipes App Demo. Download source code for free at https://www.instamobile.io . You can also check out the Swift version at https://www.iosapptemplates.com and the Kotlin version at https://www.instakotlin.com .",
     "privacy": "public",
-    "sdkVersion": "39.0.0",
     "platforms": [
       "ios",
       "android",
       "web"
     ],
-    "version": "1.0.0",
+    "version": "1.2.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -28,7 +27,8 @@
       "supportsTablet": true
     },
     "android": {
-      "package": "com.android.shafiquesons",
+      "package": "com.shafique.sons",
+      "versionCode": 3,
       "config": {
         "googleMaps": {
           "apiKey": "AIzaSyAr_yuEsvinky7Cd0fktR7jkBn3T9QESoc"
