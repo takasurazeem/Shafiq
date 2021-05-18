@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Shafiq&Sons",
+    "name": "Shafique Sons",
     "slug": "shafiq-and-sons",
     "description": "React Native Recipes App Demo. Download source code for free at https://www.instamobile.io . You can also check out the Swift version at https://www.iosapptemplates.com and the Kotlin version at https://www.instakotlin.com .",
     "privacy": "public",
@@ -9,7 +9,7 @@
       "android",
       "web"
     ],
-    "version": "1.2.0",
+    "version": "1.4.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {

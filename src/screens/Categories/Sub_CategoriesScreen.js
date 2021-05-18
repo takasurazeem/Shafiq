@@ -9,7 +9,8 @@ import {
   TouchableHighlight,
   AsyncStorage,
   StyleSheet,
-  ImageBackground
+  ImageBackground,
+  Pressable
 } from 'react-native';
 import styles from './styles';
 import { categories } from '../../data/dataArrays';
@@ -29,10 +30,12 @@ export default class SubCategoriesScreen extends React.Component {
       />
       ),
       headerRight: (
-        <Image
-        style={styless.headerButtonImage}
-        source={require('../../../assets/icons/home.png')}
-        />
+        <Pressable onPress={()=>{navigation.navigate('Home')}}>
+          <Image
+            style={styless.headerButtonImage}
+            source={require('../../../assets/icons/home.png')}
+          />
+        </Pressable>
       ),
   });
   constructor(props) {

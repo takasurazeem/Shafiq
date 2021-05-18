@@ -116,7 +116,7 @@ export default class SearchScreen extends React.Component {
   render() {
     return (
       <ImageBackground style={{ flex:1}} resizeMode= 'stretch' source={require('../../../assets/1.jpg')}>
-        <SafeAreaView style={{ flex:1 }} onPress={Keyboard.dismiss()}>
+        <SafeAreaView style={{ flex:1 }}>
           <View style={{  flexDirection:'row',justifyContent:'center',marginTop:5 }}>
             <Text style={{ fontSize:20,paddingBottom:5,borderBottomWidth:1,borderBottomColor:'#FF6347' }}>Search Items</Text>
           </View>
@@ -151,8 +151,8 @@ export default class SearchScreen extends React.Component {
             </View>
             
           </View>
-          <View style={{ flexDirection:'row',justifyContent:'center' }}>
-            <TouchableOpacity style={{ backgroundColor:'#FF6347',padding:15,borderRadius:10 }} onPress={this.search}>
+          <View style={{alignItems:'center' }}>
+            <TouchableOpacity style={{ backgroundColor:'#FF6347',paddingHorizontal:'25%',paddingVertical:15,borderRadius:10 }} onPress={this.search}>
               <Text style={{ color:'white' }}>Search</Text>
             </TouchableOpacity>
           </View>

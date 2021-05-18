@@ -1,6 +1,6 @@
 import React from 'react';
 import { PROVIDER_GOOGLE } from 'expo';
-import { TextInput, ScrollView,AsyncStorage,Dimensions,ImageBackground  ,Text, View, TouchableOpacity, Image ,StyleSheet} from 'react-native';
+import { TextInput, ScrollView,AsyncStorage,Dimensions,ImageBackground  ,Text, View, TouchableOpacity,Linking, Image ,StyleSheet} from 'react-native';
 import MenuImage from '../../components/MenuImage/MenuImage';
 import AnimatedLoader from "react-native-animated-loader";
 import * as Animatable from "react-native-animatable";
@@ -64,6 +64,10 @@ onPressRecipe =item =>{
         await this.setState({visible:false,dialogVisible:true,modalData:response.success,name:'',email:'',phone:'',message:''})
         
       });
+  }
+  onMarkerPress = (lat,long) => {
+    var url = 'geo:'+lat+','+long
+    Linking.openURL(url);
   }
   onChange = (text) => {
     this.setState({message:text})
@@ -157,6 +161,7 @@ onPressRecipe =item =>{
                       }}
                       title={"Shafiq&Sons"}
                       description={'Gujranwala'}
+                      onPress={(e) => {e.stopPropagation(); this.onMarkerPress(32.13125713506263,74.19491381086122)}}
                     />
                   </MapView>
               </View>
