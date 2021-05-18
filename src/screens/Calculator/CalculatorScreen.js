@@ -11,7 +11,8 @@ import {
   TextInput,
   StyleSheet,
   AsyncStorage,
-  ImageBackground
+  ImageBackground,
+  Platform
 } from 'react-native';
 import { Dialog } from 'react-native-simple-dialogs';
 import MenuImage from '../../components/MenuImage/MenuImage';
@@ -135,12 +136,12 @@ render(){
                     <View style={style.inputContainer}>
                         <Text style={style.label}>{this.state.floor?'Width':'Height'}</Text>
                         <TextInput
-                        style={style.input}
-                        onChangeText={heightwidth =>{this.setState({heightwidth:heightwidth})}}
-                        value={this.state.heightwidth}
-                        placeholder={this.state.floor?'Width':'Height'}
-                        keyboardType="numeric"
-                        maxLength={10}
+                            style={style.input}
+                            onChangeText={heightwidth =>{this.setState({heightwidth:heightwidth})}}
+                            value={this.state.heightwidth}
+                            placeholder={this.state.floor?'Width':'Height'}
+                            keyboardType="numeric"
+                            maxLength={10}
                         />
                     </View>
                     <View style={style.inputContainer}>
@@ -156,24 +157,28 @@ render(){
                             dropDownStyle={{backgroundColor: '#fafafa'}}
                             onChangeItem={size => this.onChnageDropDown(size)}
                         />
-                    </View>
-                    <View style={[style.inputContainer,{zIndex:0}]}>
-                        <Text style={style.label}>Packing</Text>
+                        <View style={{zIndex:0}}>
+                        <Text style={[style.label,{marginTop:20}]}>Packing</Text>
                         <TextInput
-                        value={this.state.packing}
-                        style={[style.input,{backgroundColor:this.state.packing==''?'#d9d7d7':'#f5f5f5'}]}
-                        placeholder="Packing"
-                        editable={false}
-                        // selectTextOnFocus={false}
-                        keyboardType="numeric"
-                        maxLength={10}
+                            value={this.state.packing}
+                            style={[style.input,{backgroundColor:this.state.packing==''?'#d9d7d7':'#f5f5f5',zIndex:0}]}
+                            placeholder="Packing"
+                            editable={false}
+                            // selectTextOnFocus={false}
+                            keyboardType="numeric"
+                            maxLength={10}
                         />
-                    </View>
-                    <View style={style.inputContainer}>
-                        <TouchableOpacity style={{ backgroundColor:'#FF6347',padding:15,borderRadius:10,justifyContent:'center',alignItems:'center' }} onPress={()=>this.calculte()}>
+                        </View>
+                        <TouchableOpacity style={{ backgroundColor:'#FF6347',padding:15,borderRadius:10,justifyContent:'center',alignItems:'center',marginTop:20 }} onPress={()=>this.calculte()}>
                             <Text style={{ color:'white' }}>Calculate</Text>
                         </TouchableOpacity>
                     </View>
+                    {/* <View style={[style.inputContainer,{zIndex:0}]}>
+                        
+                    </View>
+                    <View style={style.inputContainer}>
+                        
+                    </View> */}
                     <Dialog
                     // title="Confirm Dialog"
                         visible={this.state.dialogVisible}
@@ -184,45 +189,41 @@ render(){
                         <View style={{  }}>
                             <View style={{ alignItems:'center', }}>
                                 <Image style={style.icon} source={require('../../../assets/icons/icon.png')} />
-                            </View>
-                            
-                            <View style={{ flexDirection:'row',flex:1,paddingVertical:20,justifyContent:'center' }}>
-                                <View style={{ alignItems:'center',flex:1 }}>
-                                    <Text style={[style.title,{borderBottomColor:'#FF6347',borderBottomWidth:1}]}>Required Boxes</Text>
-                                </View>
-                            </View>
-                            <View style={{ flexDirection:'row',flex:1,paddingVertical:30,justifyContent:'center' }}>
+                                <Text style={[style.title,{borderBottomColor:'#FF6347',borderBottomWidth:1,marginTop:10}]}>Required Boxes</Text>
                                 <View style={style.contentContainer}>
                                     <Text style={style.title}>Total Area:</Text>
-                                </View>
-                                <View style={style.contentContainer}>
-                                    <Text style={style.title}>{this.state.total_area_ft}</Text>
-                                    <View style={{ flexDirection: 'row',paddingLeft:3 }}>
-                                        <Text style={{ fontSize: 18 }}>ft</Text>
-                                        <Text style={{ fontSize: 10,fontWeight:'bold' }}>2</Text>
+                                    <View style={style.contentContainer}>
+                                        <Text style={[style.title,{marginLeft:15}]}>{this.state.total_area_ft}</Text>
+                                        <View style={{ flexDirection: 'row',paddingLeft:3 }}>
+                                            <Text style={{ fontSize: 18 }}>ft</Text>
+                                            <Text style={{ fontSize: 10,fontWeight:'bold' }}>2</Text>
+                                        </View>
                                     </View>
                                 </View>
-                            </View>
-                            <View style={{ flexDirection:'row',flex:1,paddingVertical:30,justifyContent:'center' }}>
                                 <View style={style.contentContainer}>
                                     <Text style={style.title}>Total Area:</Text>
-                                </View>
-                                <View style={style.contentContainer}>
-                                    <Text style={style.title}>{this.state.total_area_mt}</Text>
-                                    <View style={{ flexDirection: 'row',paddingLeft:3 }}>
-                                        <Text style={{ fontSize: 18 }}>mt</Text>
-                                        <Text style={{ fontSize: 10,fontWeight:'bold' }}>2</Text>
+                                    <View style={style.contentContainer}>
+                                        <Text style={[style.title,{marginLeft:15}]}>{this.state.total_area_mt}</Text>
+                                        <View style={{ flexDirection: 'row',paddingLeft:3 }}>
+                                            <Text style={{ fontSize: 18 }}>mt</Text>
+                                            <Text style={{ fontSize: 10,fontWeight:'bold' }}>2</Text>
+                                        </View>
                                     </View>
                                 </View>
-                            </View>
-                            <View style={{ flexDirection:'row',flex:1,paddingVertical:30,justifyContent:'center' }}>
                                 <View style={style.contentContainer}>
                                     <Text style={style.title}>No of Boxes:</Text>
+                                    <View style={style.contentContainer}>
+                                        <Text style={[style.title,{marginLeft:15}]}>{this.state.no_of_boxes}</Text>
+                                        {/* <View style={{ flexDirection: 'row',paddingLeft:3 }}>
+                                            <Text style={{ fontSize: 18 }}>mt</Text>
+                                            <Text style={{ fontSize: 10,fontWeight:'bold' }}>2</Text>
+                                        </View> */}
+                                    </View>
                                 </View>
-                                <View style={style.contentContainer}>
-                                    <Text style={style.title}>{this.state.no_of_boxes}</Text>
-                                </View>
+                                
                             </View>
+                            
+                            
                         </View>
                     </Dialog>
             </View>
@@ -248,7 +249,7 @@ input:{
     borderColor:'#dbdbdb',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.8,
+    shadowOpacity: Platform.OS=='ios'?0:0.8,
     shadowRadius: 2,  
     elevation: 1,paddingLeft:5
 },
@@ -258,8 +259,9 @@ icon:{
   },
 contentContainer:{
     alignItems:'center',
-    flex:.5,
-    flexDirection:'row'
+    // flex:.5,
+    flexDirection:'row',
+    marginVertical:10
 },
 title:{
     fontSize:18

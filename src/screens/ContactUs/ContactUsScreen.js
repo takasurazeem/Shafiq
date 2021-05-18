@@ -1,6 +1,6 @@
 import React from 'react';
 import { PROVIDER_GOOGLE } from 'expo';
-import { TextInput, ScrollView,AsyncStorage,Dimensions,ImageBackground  ,Text, View, TouchableOpacity, Image ,StyleSheet} from 'react-native';
+import { TextInput, ScrollView,AsyncStorage,Dimensions,ImageBackground  ,Text, View, TouchableOpacity, Image ,StyleSheet,Platform} from 'react-native';
 import MenuImage from '../../components/MenuImage/MenuImage';
 import AnimatedLoader from "react-native-animated-loader";
 import * as Animatable from "react-native-animatable";
@@ -81,7 +81,7 @@ onPressRecipe =item =>{
                   <TextInput
                   style={{ height: 40,borderWidth: .1,backgroundColor:'#f5f5f5',borderColor:'#dbdbdb',shadowColor: '#000',
                   shadowOffset: { width: 0, height: 1 },
-                  shadowOpacity: 0.8,
+                  shadowOpacity: Platform.OS=='ios'?0:0.8,
                   shadowRadius: 2,  
                   elevation: 1,paddingLeft:5 }}
                   onChangeText={name =>{this.setState({name:name})}}
@@ -95,7 +95,7 @@ onPressRecipe =item =>{
                   <TextInput
                   style={{ height: 40,borderWidth: .1,backgroundColor:'#f5f5f5',borderColor:'#dbdbdb',shadowColor: '#000',
                   shadowOffset: { width: 0, height: 1 },
-                  shadowOpacity: 0.8,
+                  shadowOpacity: Platform.OS=='ios'?0:0.8,
                   shadowRadius: 2,  
                   elevation: 1,paddingLeft:5 }}
                   onChangeText={phone =>{this.setState({phone:phone})}}
@@ -109,7 +109,7 @@ onPressRecipe =item =>{
                   <TextInput
                   style={{ height: 40,borderWidth: .1,backgroundColor:'#f5f5f5',borderColor:'#dbdbdb',shadowColor: '#000',
                   shadowOffset: { width: 0, height: 1 },
-                  shadowOpacity: 0.8,
+                  shadowOpacity: Platform.OS=='ios'?0:0.8,
                   shadowRadius: 2,  
                   elevation: 1,paddingLeft:5 }}
                   onChangeText={email =>{this.setState({email:email})}}
