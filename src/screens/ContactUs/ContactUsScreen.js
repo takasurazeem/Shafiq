@@ -1,10 +1,6 @@
 import React from 'react';
 import { PROVIDER_GOOGLE } from 'expo';
-<<<<<<< HEAD
-import { TextInput, ScrollView,AsyncStorage,Dimensions,ImageBackground  ,Text, View, TouchableOpacity, Image ,StyleSheet,Platform} from 'react-native';
-=======
-import { TextInput, ScrollView,AsyncStorage,Dimensions,ImageBackground  ,Text, View, TouchableOpacity,Linking, Image ,StyleSheet} from 'react-native';
->>>>>>> 44f5010035c05151afb3cd6bed21bb31751f6ca1
+import { TextInput, ScrollView,AsyncStorage,Dimensions,ImageBackground  ,Text, View, TouchableOpacity, Image,Linking ,StyleSheet,Platform} from 'react-native';
 import MenuImage from '../../components/MenuImage/MenuImage';
 import AnimatedLoader from "react-native-animated-loader";
 import * as Animatable from "react-native-animatable";
@@ -70,7 +66,13 @@ onPressRecipe =item =>{
       });
   }
   onMarkerPress = (lat,long) => {
-    var url = 'geo:'+lat+','+long
+    const scheme = Platform.select({ ios: 'maps:0,0?q=', android: 'geo:0,0?q=' });
+const latLng = `${lat},${long}`;
+const label = 'Shafique Sons';
+const url = Platform.select({
+  ios: `${scheme}${label}@${latLng}`,
+  android: `${scheme}${latLng}(${label})`
+});
     Linking.openURL(url);
   }
   onChange = (text) => {
