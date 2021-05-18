@@ -126,7 +126,7 @@ export default class SearchScreen extends React.Component {
   render() {
     return (
       <ImageBackground style={{ flex:1}} resizeMode= 'stretch' source={require('../../../assets/1.jpg')}>
-        <SafeAreaView style={{ flex:1 }} onPress={Keyboard.dismiss()}>
+        <SafeAreaView style={{ flex:1 }}>
           <View style={{  flexDirection:'row',justifyContent:'center',marginTop:5 }}>
             <Text style={{ fontSize:20,paddingBottom:5,borderBottomWidth:1,borderBottomColor:'#FF6347' }}>Search Items</Text>
           </View>
@@ -142,6 +142,7 @@ export default class SearchScreen extends React.Component {
 
               />
             </View>
+<<<<<<< HEAD
             <View style={{marginVertical:10,zIndex:1000,width:'100%',alignItems:'center'}}>
               <View style={{width:'70%',alignItems:'center',justifyContent:'center',zIndex:1000}}>
                 <Text style={{alignSelf:'flex-start'}}>Select Size</Text>
@@ -160,6 +161,31 @@ export default class SearchScreen extends React.Component {
                   <Text style={{ color:'white' }}>Search</Text>
                 </TouchableOpacity>
               </View>
+=======
+            <View style={{width:'70%',marginVertical:10}}>
+              <Text>Select Size</Text>
+              <DropDownPicker
+                  items={this.state.data}
+                  defaultValue={this.state.country}
+                  containerStyle={{height: 40}}
+                  style={{backgroundColor: '#fafafa'}}
+                  itemStyle={{
+                      justifyContent: 'flex-start'
+                  }}
+                  dropDownStyle={{backgroundColor: '#fafafa'}}
+                  onChangeItem={size => this.setState({size:size})}
+              />
+            </View>
+            
+          </View>
+          <View style={{alignItems:'center' }}>
+            <TouchableOpacity style={{ backgroundColor:'#FF6347',paddingHorizontal:'25%',paddingVertical:15,borderRadius:10 }} onPress={this.search}>
+              <Text style={{ color:'white' }}>Search</Text>
+            </TouchableOpacity>
+          </View>
+          
+          <ImagePreview visible={this.state.visible} source={{uri: this.state.image}} close={this.closeImage} />
+>>>>>>> 44f5010035c05151afb3cd6bed21bb31751f6ca1
               {this.state.items.length>0 &&
                 // <View style={{justifyContent:'center',alignItems:'center',paddingVertical:10,zIndex:0,width:"100%"}}>
                   <View style={{borderBottomWidth:1,borderColor:'#FF6347',paddingBottom:10,zIndex:0,marginVertical:10}}>

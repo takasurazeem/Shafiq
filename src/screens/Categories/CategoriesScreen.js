@@ -9,7 +9,9 @@ import {
   TouchableHighlight,
   AsyncStorage,
   StyleSheet,
-  ImageBackground
+  ImageBackground,
+  TouchableOpacity,
+  Pressable
 } from 'react-native';
 import styles from './styles';
 import { categories } from '../../data/dataArrays';
@@ -30,10 +32,12 @@ export default class CategoriesScreen extends React.Component {
       />
       ),
       headerRight: (
-        <Image
-        style={styless.headerButtonImage}
-        source={require('../../../assets/icons/home.png')}
-        />
+        <Pressable onPress={()=>{navigation.navigate('Home')}}>
+          <Image
+            style={styless.headerButtonImage}
+            source={require('../../../assets/icons/home.png')}
+          />
+        </Pressable>
       ),
   });
   constructor(props) {
