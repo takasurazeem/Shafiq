@@ -143,7 +143,7 @@ export default class SearchScreen extends React.Component {
               />
             </View>
 
-            <View style={{width:'70%',marginVertical:10}}>
+            <View style={{width:'70%',marginVertical:10,zIndex:1000}}>
               <Text>Select Size</Text>
               <DropDownPicker
                   items={this.state.data}
@@ -157,19 +157,19 @@ export default class SearchScreen extends React.Component {
                   onChangeItem={size => this.setState({size:size})}
               />
             </View>
-            
-          </View>
-          <View style={{alignItems:'center' }}>
-            <TouchableOpacity style={{ backgroundColor:'#FF6347',paddingHorizontal:'25%',paddingVertical:15,borderRadius:10 }} onPress={this.search}>
+            <View style={{alignItems:'center' ,zIndex:0,marginBottom:20}}>
+            <TouchableOpacity style={{ backgroundColor:'#FF6347',zIndex:0,paddingHorizontal:'25%',paddingVertical:15,borderRadius:10 }} onPress={this.search}>
               <Text style={{ color:'white' }}>Search</Text>
             </TouchableOpacity>
           </View>
+          </View>
+          
           
           <ImagePreview visible={this.state.visible} source={{uri: this.state.image}} close={this.closeImage} />
               {this.state.items.length>0 &&
                 // <View style={{justifyContent:'center',alignItems:'center',paddingVertical:10,zIndex:0,width:"100%"}}>
-                  <View style={{borderBottomWidth:1,borderColor:'#FF6347',paddingBottom:10,zIndex:0,marginVertical:10}}>
-                    <Text style={{fontSize:20}}>Products</Text>
+                  <View style={{paddingBottom:10,zIndex:0,marginVertical:10,alignItems:'center'}}>
+                    <Text style={{borderBottomWidth:1,borderColor:'#FF6347',fontSize:20}}>Products</Text>
                   </View>
                 // </View>
               }
