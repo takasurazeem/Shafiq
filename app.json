@@ -9,7 +9,7 @@
       "android",
       "web"
     ],
-    "version": "1.4.0",
+    "version": "2.5.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -28,7 +28,7 @@
     },
     "android": {
       "package": "com.shafique.sons",
-      "versionCode": 3,
+      "versionCode": 4,
       "config": {
         "googleMaps": {
           "apiKey": "AIzaSyAr_yuEsvinky7Cd0fktR7jkBn3T9QESoc"
