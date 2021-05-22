@@ -130,7 +130,7 @@ export default class SearchScreen extends React.Component {
           <View style={{  flexDirection:'row',justifyContent:'center',marginTop:5 }}>
             <Text style={{ fontSize:20,paddingBottom:5,borderBottomWidth:1,borderBottomColor:'#FF6347' }}>Search Items</Text>
           </View>
-          <View style={{ paddingHorizontal:20,paddingTop:20,alignItems:'center'}}>
+          <View style={{ paddingHorizontal:20,paddingTop:20,alignItems:'center',zIndex:1000}}>
           <View style={{width:'70%',marginVertical:10,zIndex:0 }}>
               <Text>Search by Code</Text>
               <TextInput
