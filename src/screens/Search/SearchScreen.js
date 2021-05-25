@@ -62,7 +62,7 @@ export default class SearchScreen extends React.Component {
     })
     .then(async({ data: response }) => {
       console.log(response.sizes)
-      var sizes=[]
+      var sizes=[{label: 'Select an Item', value: '', icon: () => <Icon name="flag" size={18} color="#900" />}]
       response.sizes.map(x =>{
           sizes.push({label: x.size, value: x.id, icon: () => <Icon name="flag" size={18} color="#900" />})
       })
@@ -154,7 +154,7 @@ export default class SearchScreen extends React.Component {
                       justifyContent: 'flex-start'
                   }}
                   dropDownStyle={{backgroundColor: '#fafafa'}}
-                  onChangeItem={size => this.setState({size:size})}
+                  onChangeItem={size => this.setState({size:size.value})}
               />
             </View>
             <View style={{alignItems:'center' ,zIndex:0,marginBottom:20}}>
