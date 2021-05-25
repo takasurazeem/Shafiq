@@ -8,7 +8,7 @@ const SCREEN_WIDTH = width < height ? width : height;
 const recipeNumColums = 2;
 const SizeNumColums = 3;
 // item size
-const RECIPE_ITEM_HEIGHT = 170;
+const RECIPE_ITEM_HEIGHT = 180;
 const SIZE_ITEM_HEIGHT = 50;
 const RECIPE_ITEM_MARGIN = 20;
 
@@ -42,7 +42,7 @@ export const RecipeCard = StyleSheet.create({
     borderRadius: 30
   },
   photo: {
-    width: (SCREEN_WIDTH - (.5 ) * RECIPE_ITEM_MARGIN) / recipeNumColums,
+    width: (SCREEN_WIDTH - (.1 ) * RECIPE_ITEM_MARGIN) / recipeNumColums,
     height: RECIPE_ITEM_HEIGHT,
     borderRadius: 15,
     borderBottomLeftRadius: 0,

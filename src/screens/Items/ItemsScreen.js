@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList, ImageBackground, Text, View, TouchableHighlight, Image,AsyncStorage,StyleSheet } from 'react-native';
+import { FlatList, ImageBackground, Text, View, TouchableHighlight, Image,AsyncStorage,StyleSheet,Pressable } from 'react-native';
 import styles from './styles';
 import Items from '../../components/Items/Items';
 import ImagePreview from 'react-native-image-preview';
@@ -20,10 +20,12 @@ export default class ItemScreen extends React.Component {
       />
       ),
       headerRight: (
-        <Image
-        style={styless.headerButtonImage}
-        source={require('../../../assets/icons/product.png')}
-        />
+        <Pressable onPress={()=>{navigation.goBack()}}>
+          <Image
+            style={styless.headerButtonImage}
+            source={require('../../../assets/icons/back.png')}
+          />
+        </Pressable>
       ),
   });
 

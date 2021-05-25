@@ -1,6 +1,6 @@
 import React from 'react';
 import { PROVIDER_GOOGLE } from 'expo';
-import { TextInput, ScrollView,AsyncStorage,Dimensions,ImageBackground  ,Text, View, TouchableOpacity,Linking, Image ,StyleSheet} from 'react-native';
+import { TextInput, ScrollView,AsyncStorage,Dimensions,ImageBackground  ,Text, View, TouchableOpacity, Image,Linking ,StyleSheet,Platform} from 'react-native';
 import MenuImage from '../../components/MenuImage/MenuImage';
 import AnimatedLoader from "react-native-animated-loader";
 import * as Animatable from "react-native-animatable";
@@ -66,7 +66,13 @@ onPressRecipe =item =>{
       });
   }
   onMarkerPress = (lat,long) => {
-    var url = 'geo:'+lat+','+long
+    const scheme = Platform.select({ ios: 'maps:0,0?q=', android: 'geo:0,0?q=' });
+const latLng = `${lat},${long}`;
+const label = 'Shafique Sons';
+const url = Platform.select({
+  ios: `${scheme}${label}@${latLng}`,
+  android: `${scheme}${latLng}(${label})`
+});
     Linking.openURL(url);
   }
   onChange = (text) => {
@@ -85,7 +91,7 @@ onPressRecipe =item =>{
                   <TextInput
                   style={{ height: 40,borderWidth: .1,backgroundColor:'#f5f5f5',borderColor:'#dbdbdb',shadowColor: '#000',
                   shadowOffset: { width: 0, height: 1 },
-                  shadowOpacity: 0.8,
+                  shadowOpacity: Platform.OS=='ios'?0:0.8,
                   shadowRadius: 2,  
                   elevation: 1,paddingLeft:5 }}
                   onChangeText={name =>{this.setState({name:name})}}
@@ -99,7 +105,7 @@ onPressRecipe =item =>{
                   <TextInput
                   style={{ height: 40,borderWidth: .1,backgroundColor:'#f5f5f5',borderColor:'#dbdbdb',shadowColor: '#000',
                   shadowOffset: { width: 0, height: 1 },
-                  shadowOpacity: 0.8,
+                  shadowOpacity: Platform.OS=='ios'?0:0.8,
                   shadowRadius: 2,  
                   elevation: 1,paddingLeft:5 }}
                   onChangeText={phone =>{this.setState({phone:phone})}}
@@ -113,7 +119,7 @@ onPressRecipe =item =>{
                   <TextInput
                   style={{ height: 40,borderWidth: .1,backgroundColor:'#f5f5f5',borderColor:'#dbdbdb',shadowColor: '#000',
                   shadowOffset: { width: 0, height: 1 },
-                  shadowOpacity: 0.8,
+                  shadowOpacity: Platform.OS=='ios'?0:0.8,
                   shadowRadius: 2,  
                   elevation: 1,paddingLeft:5 }}
                   onChangeText={email =>{this.setState({email:email})}}

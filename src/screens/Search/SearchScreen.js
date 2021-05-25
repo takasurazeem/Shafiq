@@ -9,7 +9,9 @@ import {
   AsyncStorage,
   TextInput,
   ImageBackground,
-  Keyboard
+  Keyboard,
+  Platform,
+  Alert
 } from 'react-native';
 import axios from 'axios';
 import styles from './styles';
@@ -39,7 +41,6 @@ export default class SearchScreen extends React.Component {
         />
       ),
   });
-
   constructor(props) {
     super(props);
     this.state = {
@@ -61,6 +62,7 @@ export default class SearchScreen extends React.Component {
     .then(async({ data: response }) => {
       console.log(response.sizes)
       var sizes=[]
+      var sizes=[{label: 'Select an Item', value: '', icon: () => <Icon name="flag" size={18} color="#900" />}]
       response.sizes.map(x =>{
           sizes.push({label: x.size, value: x.id, icon: () => <Icon name="flag" size={18} color="#900" />})
       })
@@ -81,9 +83,17 @@ export default class SearchScreen extends React.Component {
       }
     })
     .then(async({ data: response }) => {
-      console.log(response)
       if(response.data.length==0){
-        alert('No Data Found!')
+        // this.setState({items:[],Productsloading:false,Error:''})
+       return Alert.alert(
+          "No Data Found",
+          "",
+          [
+            
+            { text: "OK", onPress: () => this.setState({items:[],Productsloading:false,Error:''}) }
+          ]
+        );
+    
       }
         await this.setState({items:response.data,Productsloading:false,Error:''})
     });
@@ -112,7 +122,6 @@ export default class SearchScreen extends React.Component {
       </TouchableHighlight>
     </Animatable.View>
   );
-
   render() {
     return (
       <ImageBackground style={{ flex:1}} resizeMode= 'stretch' source={require('../../../assets/1.jpg')}>
@@ -120,6 +129,8 @@ export default class SearchScreen extends React.Component {
           <View style={{  flexDirection:'row',justifyContent:'center',marginTop:5 }}>
             <Text style={{ fontSize:20,paddingBottom:5,borderBottomWidth:1,borderBottomColor:'#FF6347' }}>Search Items</Text>
           </View>
+          {Platform.OS=="android"
+          &&
           <View style={{ paddingHorizontal:20,paddingTop:20,alignItems:'center'}}>
           <View style={{width:'70%',marginVertical:10,zIndex:0 }}>
               <Text>Search by Code</Text>
@@ -149,21 +160,62 @@ export default class SearchScreen extends React.Component {
                   onChangeItem={size => this.setState({size:size})}
               />
             </View>
-            
+
           </View>
+  }
+  {Platform.OS=="android"
+          &&
           <View style={{alignItems:'center' }}>
             <TouchableOpacity style={{ backgroundColor:'#FF6347',paddingHorizontal:'25%',paddingVertical:15,borderRadius:10 }} onPress={this.search}>
               <Text style={{ color:'white' }}>Search</Text>
             </TouchableOpacity>
           </View>
+  }
+          {Platform.OS=="ios"
+          &&
+          <View style={{ paddingHorizontal:20,paddingTop:20,alignItems:'center',zIndex:1000}}>
+          <View style={{width:'70%',marginVertical:10,zIndex:0 }}>
+              <Text>Search by Code</Text>
+              <TextInput
+                style={{ height: 40,borderWidth: .1,backgroundColor:'#fafafa',borderColor:'#adadad' }}
+                onChangeText={code =>{this.setState({code:code})}}
+                // value={number}
+                placeholder="Code###"
+                // keyboardType="numeric"
+              />
+            </View>
+            <View style={{width:'70%',marginVertical:10,zIndex:1000}}>
+              <Text>Select Size</Text>
+              <DropDownPicker
+                  items={this.state.data}
+                  defaultValue={this.state.country}
+                  containerStyle={{height: 40}}
+                  style={{backgroundColor: '#fafafa'}}
+                  itemStyle={{
+                      justifyContent: 'flex-start'
+                  }}
+                  dropDownStyle={{backgroundColor: '#fafafa'}}
+                  onChangeItem={size => this.setState({size:size})}
+                  onChangeItem={size => this.setState({size:size.value})}
+              />
+            </View>
+            <View style={{alignItems:'center' ,zIndex:0,marginBottom:20}}>
+            <TouchableOpacity style={{ backgroundColor:'#FF6347',zIndex:0,paddingHorizontal:'25%',paddingVertical:15,borderRadius:10 }} onPress={this.search}>
+              <Text style={{ color:'white' }}>Search</Text>
+            </TouchableOpacity>
+          </View>
+          </View>
+  }
+  
+  
           
           <ImagePreview visible={this.state.visible} source={{uri: this.state.image}} close={this.closeImage} />
               {this.state.items.length>0 &&
-                <View style={{justifyContent:'center',alignItems:'center',paddingVertical:10}}>
-                  <View style={{borderBottomWidth:1,borderColor:'#FF6347',paddingBottom:10}}>
-                    <Text style={{fontSize:20}}>Products</Text>
+                // <View style={{justifyContent:'center',alignItems:'center',paddingVertical:10,zIndex:0,width:"100%"}}>
+                  <View style={{paddingBottom:10,zIndex:0,marginVertical:10,alignItems:'center'}}>
+                    <Text style={{borderBottomWidth:1,borderColor:'#FF6347',fontSize:20}}>Products</Text>
                   </View>
-                </View>
+                // </View>
               }
               <FlatList
                 vertical
@@ -173,6 +225,16 @@ export default class SearchScreen extends React.Component {
                 renderItem={this.renderProducts}
                 keyExtractor={item => `${item.size_id}`}
               />
+            {/* </View>
+            
+          </View> */}
+          {/* <View style={{ flexDirection:'row',justifyContent:'center',zIndex:0 }}>
+            <TouchableOpacity style={{ backgroundColor:'#FF6347',padding:15,borderRadius:10,zIndex:0 }} onPress={this.search}>
+              <Text style={{ color:'white' }}>Search</Text>
+            </TouchableOpacity>
+          </View> */}
+          
+          <ImagePreview visible={this.state.visible} source={{uri: this.state.image}} close={this.closeImage} />
               <AnimatedLoader
                 visible={this.state.Productsloading}
                 overlayColor="rgba(255,255,255,0.75)"
