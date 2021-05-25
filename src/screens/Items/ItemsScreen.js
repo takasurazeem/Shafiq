@@ -20,10 +20,10 @@ export default class ItemScreen extends React.Component {
       />
       ),
       headerRight: (
-        <Pressable onPress={()=>{navigation.navigate('Home')}}>
+        <Pressable onPress={()=>{navigation.goBack()}}>
           <Image
             style={styless.headerButtonImage}
-            source={require('../../../assets/icons/home.png')}
+            source={require('../../../assets/icons/back.png')}
           />
         </Pressable>
       ),
