@@ -42,8 +42,8 @@ export const RecipeCard = StyleSheet.create({
     borderRadius: 30
   },
   photo: {
-    width: (SCREEN_WIDTH - (.1 ) * RECIPE_ITEM_MARGIN) / recipeNumColums,
-    height: RECIPE_ITEM_HEIGHT,
+    width: 200,//(SCREEN_WIDTH - (.1 ) * RECIPE_ITEM_MARGIN) / recipeNumColums,
+    height: 200,//RECIPE_ITEM_HEIGHT,
     borderRadius: 15,
     borderBottomLeftRadius: 0,
     borderBottomRightRadius: 0,

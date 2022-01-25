@@ -70,7 +70,7 @@ export default class DrawerContainer extends React.Component {
             }}
           />
           <MenuButton
-            title="Contact Us"
+            title="Get Quote"
             source={require('../../../assets/icons/contact.png')}
             onPress={() => {
               navigation.navigate('ContactUs');
