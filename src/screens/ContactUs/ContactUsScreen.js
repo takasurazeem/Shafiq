@@ -11,7 +11,7 @@ import { ConfirmDialog } from 'react-native-simple-dialogs';
 const { width, height } = Dimensions.get('window');
 export default class HomeScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
-    title: 'Contact Us',
+    title: 'Get Quote',
     headerTitleStyle: { alignSelf: 'center' },
     headerLeft: (
       <MenuImage
@@ -83,8 +83,9 @@ const url = Platform.select({
     return (
       <ImageBackground style={{ flex:1}} resizeMode= 'stretch' source={require('../../../assets/1.jpg')}>
           <ScrollView>
+            <View style={{ alignItems:'center' }}>
               <View style={{  flexDirection:'row',justifyContent:'center',marginTop:15 }}>
-                  <Text style={{ fontSize:24,paddingBottom:5,borderBottomWidth:1,borderBottomColor:'#FF6347' }}>Get In Touch</Text>
+                  <Text style={{ fontSize:24,paddingBottom:5,borderBottomWidth:1,borderBottomColor:'#FF6347' }}>Get Quotation!</Text>
               </View>
               <View style={{width:'70%', marginHorizontal:50,marginVertical:10 }}>
                   <Text>Your Name</Text>
@@ -140,16 +141,17 @@ const url = Platform.select({
                       underlineColorAndroid={'transparent'}
                   />
               </View>
-              <View style={{width:'30%', marginHorizontal:50,marginVertical:10 }}>
-                  <TouchableOpacity style={{ backgroundColor:'#FF6347',padding:15,borderRadius:10,justifyContent:'center',alignItems:'center' }} onPress={this.component}>
+              <View style={{width:'100%', alignItems: 'center'}}>
+                  <TouchableOpacity style={{ width:'50%', backgroundColor:'#FF6347',padding:15,borderRadius:10,justifyContent:'center',alignItems:'center' }} onPress={this.component}>
                       <Text style={{ color:'white' }}>Send</Text>
                   </TouchableOpacity>
               </View>
+            </View>
               <View style={{  flexDirection:'row',justifyContent:'center',marginTop:25 }}>
-                  <Text style={{ fontSize:24,paddingBottom:5,borderBottomWidth:1,borderBottomColor:'#FF6347' }}>Get Directions</Text>
+                  {/* <Text style={{ fontSize:24,paddingBottom:5,borderBottomWidth:1,borderBottomColor:'#FF6347' }}>Get Directions</Text> */}
               </View>
               <View style={{width:'93%', marginHorizontal:10,marginVertical:50 }}>
-                  <MapView
+                 {/*  <MapView
                       initialRegion={{
                         latitude: 32.13125713506263,
                         longitude: 74.19491381086122,
@@ -169,7 +171,7 @@ const url = Platform.select({
                       description={'Gujranwala'}
                       onPress={(e) => {e.stopPropagation(); this.onMarkerPress(32.13125713506263,74.19491381086122)}}
                     />
-                  </MapView>
+                  </MapView> */}
               </View>
               <AnimatedLoader
               visible={visible}
